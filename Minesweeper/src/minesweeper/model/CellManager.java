@@ -77,6 +77,7 @@ public class CellManager {
             }).count();
             if (cnt == 0) {
                 mainController.clear();
+                gameOver = true;
             }
         }
     }
@@ -158,6 +159,6 @@ public class CellManager {
             mc.state = CellState.UNKNOWN;
             mc.str.setValue("");
         }
-        mainController.mineAdd(mc.state.equals(CellState.FLAG) ? -1 : 0);
+        mainController.mineAdd(mc.state.equals(CellState.FLAG) ? -1 : 1);
     }
 }

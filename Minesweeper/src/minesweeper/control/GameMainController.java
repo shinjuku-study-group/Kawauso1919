@@ -20,8 +20,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.effect.BoxBlur;
+import javafx.scene.effect.Light;
+import javafx.scene.effect.Lighting;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import minesweeper.Minesweeper;
@@ -64,12 +67,12 @@ public class GameMainController implements Initializable {
         gameOverMessage.setVisible(false);
         gameOverFilter.setVisible(false);
         gameClearMessage.setVisible(false);
-        
+
         GameUtil.adjustStageSize(stage, mode);
-        
+
         mineCountInt = 0;
         mineAdd(mode.mineCount);
-        
+
         minePane.getChildren().clear();
         cellManager = new CellManager(mode, this);
         cellManager.cells.stream().forEach((mc) -> {
@@ -77,7 +80,7 @@ public class GameMainController implements Initializable {
         });
 
         timer = new GameTimer(timeLabel);
-        timer.start();    
+        timer.start();
     }
 
     @Override
@@ -105,44 +108,44 @@ public class GameMainController implements Initializable {
         timer.end();
         gameClearMessage.setVisible(true);
 
-        Timeline timeline = new Timeline(
-                                new KeyFrame(Duration.ZERO, (ActionEvent event) -> {
-                    System.out.println("Key1");
-                    BoxBlur blur = new BoxBlur(250, 1, 1);
-                    gameClearMessage.setEffect(blur);
-                }),
-                new KeyFrame(Duration.millis(250), (ActionEvent event) -> {
-                    System.out.println("Key1");
-                    BoxBlur blur = new BoxBlur(200, 1, 1);
-                    gameClearMessage.setEffect(blur);
-                }),
-                new KeyFrame(Duration.millis(250), (ActionEvent event) -> {
-                    BoxBlur blur = new BoxBlur(140, 1, 1);
-                    gameClearMessage.setEffect(blur);
-                }),
-                new KeyFrame(Duration.millis(250), (ActionEvent event) -> {
-                    BoxBlur blur = new BoxBlur(80, 1, 1);
-                    gameClearMessage.setEffect(blur);
-                }),
-                new KeyFrame(Duration.millis(250), (ActionEvent event) -> {
-                    BoxBlur blur = new BoxBlur(20, 1, 1);
-                    gameClearMessage.setEffect(blur);
-                }),
-                new KeyFrame(Duration.millis(250), (ActionEvent event) -> {
-                    System.out.println("KeyEnd");
-                    BoxBlur blur = new BoxBlur(0, 1, 1);
-                    gameClearMessage.setEffect(blur);
-                })
-        );
+        //TODO 滅茶苦茶
+        KeyFrame[] keyFrames = createKeyFrames(8, 20, 13);
+        keyFrames[keyFrames.length - 1] = new KeyFrame(Duration.millis(8 * 15), (ActionEvent event) -> {
+            Lighting lighting = new Lighting();
+            lighting.setDiffuseConstant(1.5);
+            lighting.setSurfaceScale(3.8);
+            lighting.setSpecularExponent(25.15);
+            lighting.setSpecularConstant(1.0);
+            Light light = new Light.Distant(40, 50, Color.WHITE);
+            lighting.setLight(light);
+            gameClearMessage.setEffect(lighting);
+        });
+        Timeline timeline = new Timeline(keyFrames);
+
         timeline.setCycleCount(1);
         timeline.play();
         GameUtil.playSE(Minesweeper.class.getResource("Happy.mp3"));
     }
-    
+
+    private KeyFrame[] createKeyFrames(long duration, int bulurValueStep, int frameSize) {
+        KeyFrame[] result = new KeyFrame[frameSize+1];
+        for (int i = 0; i < frameSize; i++) {
+            result[i] = createKeyFrame(duration * i, 255 - bulurValueStep * i < 0 ? 0: 255 - bulurValueStep * i);
+        }
+        return result;
+    }
+
+    private KeyFrame createKeyFrame(long duration, int bulurValue) {
+        return new KeyFrame(Duration.millis(duration), (ActionEvent event) -> {
+            BoxBlur blur = new BoxBlur(bulurValue, 1, 1);
+            gameClearMessage.setEffect(blur);
+        });
+    }
+
     public void setStage(Stage stage) {
         this.stage = stage;
     }
-    
+
     public void mineAdd(int add) {
         mineCountInt += add;
         mineCountProperty.setValue(Integer.toString(mineCountInt));

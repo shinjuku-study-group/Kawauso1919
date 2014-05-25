@@ -57,20 +57,23 @@
                   <Insets />
                </opaqueInsets>
             </Label>
-            <Label fx:id="gameClearMessage" alignment="CENTER" layoutX="11.0" layoutY="11.0" prefHeight="195.0" prefWidth="402.0" text="Game Clear!!" textAlignment="CENTER" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Label fx:id="gameClearMessage" alignment="CENTER" layoutX="11.0" layoutY="11.0" prefHeight="195.0" prefWidth="402.0" text="Game Clear!!" textAlignment="CENTER" textFill="#1310ae" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <cursor>
                   <Cursor fx:constant="W_RESIZE" />
                </cursor>
                <effect>
-                  <GaussianBlur radius="0.0">
-                     <input>
+                  <Lighting specularConstant="1.4" specularExponent="14.15">
+                     <bumpInput>
                         <Lighting bumpInput="$null">
                            <light>
                               <Light.Distant />
                            </light>
                         </Lighting>
-                     </input>
-                  </GaussianBlur>
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
                </effect>
                <font>
                   <Font name="Comic Sans MS Bold Italic" size="40.0" />

@@ -12,6 +12,7 @@ package minesweeper.model;
  * @author t-sato
  */
 public enum GameMode {
+    DEBUG(20, 15, 2),
     EASY(10, 6, 5),
     NORMAL(15, 10, 15),
     HARD(20, 16, 40),
