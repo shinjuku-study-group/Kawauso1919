@@ -155,10 +155,12 @@ public class CellManager {
         if (CellState.UNKNOWN.equals(mc.state)) {
             mc.state = CellState.FLAG;
             mc.str.setValue("旗");
+            mainController.mineAdd(1);
         } else if (CellState.FLAG.equals(mc.state)) {
             mc.state = CellState.UNKNOWN;
             mc.str.setValue("");
+            mainController.mineAdd(-1);
         }
-        mainController.mineAdd(mc.state.equals(CellState.FLAG) ? -1 : 1);
+        
     }
 }

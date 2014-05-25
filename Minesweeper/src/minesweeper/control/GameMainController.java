@@ -35,8 +35,9 @@ import minesweeper.util.GameUtil;
 import minesweeper.view.MineCellLabel;
 
 /**
- *
- * @author satout-
+ * メインのコントローラ。<br>
+ * 
+ * @author t-sato
  */
 public class GameMainController implements Initializable {
 
@@ -104,10 +105,21 @@ public class GameMainController implements Initializable {
         GameUtil.playSE(Minesweeper.class.getResource("explosion.mp3"));
     }
 
+    /**
+     * ゲームクリア。
+     */
     public void clear() {
         timer.end();
         gameClearMessage.setVisible(true);
 
+        execGameClearAnimation();
+        
+        GameUtil.playSE(Minesweeper.class.getResource("Happy.mp3"));
+        
+        //TODO 記録
+    }
+
+    private void execGameClearAnimation() {
         //TODO 滅茶苦茶
         KeyFrame[] keyFrames = createKeyFrames(8, 20, 13);
         keyFrames[keyFrames.length - 1] = new KeyFrame(Duration.millis(8 * 15), (ActionEvent event) -> {
@@ -121,10 +133,8 @@ public class GameMainController implements Initializable {
             gameClearMessage.setEffect(lighting);
         });
         Timeline timeline = new Timeline(keyFrames);
-
         timeline.setCycleCount(1);
         timeline.play();
-        GameUtil.playSE(Minesweeper.class.getResource("Happy.mp3"));
     }
 
     private KeyFrame[] createKeyFrames(long duration, int bulurValueStep, int frameSize) {

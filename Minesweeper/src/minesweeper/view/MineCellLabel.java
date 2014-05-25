@@ -27,6 +27,7 @@ public class MineCellLabel extends Label {
         setLayoutY(mc.iy * SIZE + 3);
         setMaxSize(SIZE, SIZE);
         setMinSize(SIZE, SIZE);
+        //TODO CSSでやればいいんじゃない？
         setStyle("-fx-background-color: white; -fx-border-width: 1; -fx-border-color: gray;");
         textProperty().bind(mc.str);
         setAlignment(Pos.CENTER);
@@ -61,6 +62,7 @@ public class MineCellLabel extends Label {
                     } else {
                         setStyle("-fx-background-color: white; -fx-border-width: 1; -fx-border-color: gray;");
                     }
+                    //TODO 数字に色付けたいなあ・・
                     break;
                 case FLAG:
                     setStyle("-fx-background-color: yellow; -fx-border-width: 1; -fx-border-color: gray;");
