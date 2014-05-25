@@ -17,7 +17,8 @@ import minesweeper.model.GameMode;
 import minesweeper.util.GameUtil;
 
 /**
- *
+ * マインスイーパーのアプリケーション。
+ * 
  * @author t-sato
  */
 public class Minesweeper extends Application {
@@ -27,17 +28,21 @@ public class Minesweeper extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("GameMain.fxml"));
         Parent root = loader.load();
         
+        //メインコントーラにステージへの参照を持たせる。
         GameMainController controller = (GameMainController) loader.getController();
         controller.setStage(stage);
         
-        Scene scene = new Scene(root);
+        //ステージの初期化処理
         stage.setTitle(GameConstant.TITLE());
         GameUtil.adjustStageSize(stage, GameMode.EASY);
-       
-        stage.setScene(scene);
-        //TODO ✖ボタン押されてた時になんかうまく死んでくれない・・・
-        stage.setOnCloseRequest((eh) -> {System.exit(0);});
         stage.setResizable(false);
+       
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        
+        //TODO ✖ボタン押されてた時になんかうまく死んでくれないから強制即死させる。
+        stage.setOnCloseRequest((eh) -> {System.exit(0);});
+        
         stage.show();
         
     }

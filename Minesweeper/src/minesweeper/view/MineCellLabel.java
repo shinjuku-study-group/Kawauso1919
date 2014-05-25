@@ -8,6 +8,7 @@ package minesweeper.view;
 import javafx.beans.Observable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import minesweeper.model.CellState;
 import minesweeper.model.GameConstant;
 import minesweeper.model.MineCell;
 
@@ -32,6 +33,17 @@ public class MineCellLabel extends Label {
         textProperty().bind(mc.str);
         setAlignment(Pos.CENTER);
 
+        //マウスクリックのリスナ登録
+        addMouceClickListener();
+
+        //テキストプロパティ変更のリスナ登録
+        addTextChangeListener();
+    }
+
+    /**
+     * マウスクリックのリスナ登録
+     */
+    private void addMouceClickListener() {
         setOnMouseClicked((me) -> {
             switch (me.getButton()) {
                 case PRIMARY:
@@ -52,17 +64,25 @@ public class MineCellLabel extends Label {
                     break;
             }
         });
+    }
 
+    /**
+     * テキストプロパティ変更のリスナ登録
+     */
+    private void addTextChangeListener() {
         textProperty().addListener((Observable ob) -> {
             switch (mc.state) {
                 case UNKNOWN:
                 case OPENED:
-                    if (getText().equals("　")) {
-                        setStyle("-fx-background-color: gray; -fx-border-width: 1; -fx-border-color: gray;");
+                    //TODO この判定キモイ。状態を分けるべきかも。
+                    if (getText().equals(CellState.OPENED.stringValue)) {
+                        //安全地帯(周囲の地雷なし)=>グレーアウト
+                        setStyle("-fx-background-color: #CCCCCC; -fx-border-width: 1; -fx-border-color: gray;");
                     } else {
+                        //周囲に地雷あり=>数字の表示
                         setStyle("-fx-background-color: white; -fx-border-width: 1; -fx-border-color: gray;");
+                        //TODO 数字に色付けたいなあ・・
                     }
-                    //TODO 数字に色付けたいなあ・・
                     break;
                 case FLAG:
                     setStyle("-fx-background-color: yellow; -fx-border-width: 1; -fx-border-color: gray;");
@@ -72,6 +92,5 @@ public class MineCellLabel extends Label {
                     break;
             }
         });
-
     }
 }

@@ -21,12 +21,18 @@ public class GameTimer {
     private long timeLong;
     private final StringProperty timeStr = new SimpleStringProperty("");
 
+    /**
+     * 表示ラベルを受けるコンストラクタ。<br>
+     * TODO ややキモイ？
+     * 
+     * @param time タイム表示ラベル 
+     */
     public GameTimer(Label time) {
         time.textProperty().bind(timeStr);
     }
 
     /**
-     * タイマーを止める。ついでに時間を返す。
+     * タイマーを止める。ついでにタイムを返す。
      * 
      * @return 終了時間。 
      */
@@ -51,7 +57,7 @@ public class GameTimer {
                 }
                 
                 try {
-                    Util.getFromApplicationThread(() -> {
+                    Util.execFXAppThread(() -> {
                         timeLong++;
                         String fmStr = StringFormatter.format("%02d:%02d:%02d", timeLong / 3600, timeLong / 60, timeLong % 60).getValue();
 
@@ -59,7 +65,8 @@ public class GameTimer {
                         return null;
                     });
                 } catch (Exception e) {
-
+                    //TODO 失敗したらどうすればいいんだろうか。
+                    e.printStackTrace();
                 }
             }
         }).start();

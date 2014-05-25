@@ -32,7 +32,7 @@ public class GameUtil {
     }
 
     /**
-     * 音を鳴らす。超雑。めんどい。
+     * 音を鳴らす。超雑。でも弄るのめんどい。
      * 
      * @param url メディアのURL
      */

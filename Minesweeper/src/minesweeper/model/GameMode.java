@@ -12,12 +12,12 @@ package minesweeper.model;
  * @author t-sato
  */
 public enum GameMode {
-    DEBUG(20, 15, 2),
+    DEBUG(20, 15, 1),
     EASY(10, 6, 5),
-    NORMAL(15, 10, 15),
-    HARD(20, 16, 40),
-    MANIA(30, 20, 120),
-    CRAZY(35, 22, 250);
+    NORMAL(18, 12, 32),
+    HARD(24, 18, 75),
+    MANIA(32, 22, 150),
+    CRAZY(46, 25, 300);
     //TODO CUSTOMとか？
     
     public final int column;
@@ -29,5 +29,4 @@ public enum GameMode {
         this.row = row;
         this.mineCount = mineCount;
     }
-    
 }

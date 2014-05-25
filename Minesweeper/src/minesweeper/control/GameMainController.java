@@ -98,6 +98,9 @@ public class GameMainController implements Initializable {
         mineCountLabel.textProperty().bind(mineCountProperty);
     }
 
+    /**
+     * ゲームオーバー。
+     */
     public void gameOver() {
         timer.end();
         gameOverMessage.setVisible(true);
@@ -116,7 +119,7 @@ public class GameMainController implements Initializable {
         
         GameUtil.playSE(Minesweeper.class.getResource("Happy.mp3"));
         
-        //TODO 記録
+        //TODO タイム記録
     }
 
     private void execGameClearAnimation() {

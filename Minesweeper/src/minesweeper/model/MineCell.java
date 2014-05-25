@@ -20,19 +20,13 @@ public class MineCell {
     public int cellId;
     private CellType type = CellType.NORMAL;
 
-    /**
-     * セル文字列表現。
-     */
+    /** セル文字列表現。 */
     public StringProperty str = new SimpleStringProperty("");
 
-    /**
-     * セルの状態。
-     */
+    /** セルの状態。 */
     public CellState state = CellState.UNKNOWN;
 
-    /**
-     * セルマネージャ。
-     */
+    /** セルマネージャ。 */
     public final CellManager mgr;
 
     public MineCell(int ix, int iy, int cellId, CellManager mgr) {
@@ -40,6 +34,26 @@ public class MineCell {
         this.iy = iy;
         this.cellId = cellId;
         this.mgr = mgr;
+    }
+
+    /**
+     * 状態を変更する。
+     * 
+     * @param state 次の状態
+     */
+    public void change(CellState state) {
+        change(state, state.stringValue);
+    }
+    
+    /**
+     * 状態を変更する。
+     * 
+     * @param state 次の状態
+     * @param str 文字列表現
+     */
+    public void change(CellState state, String str) {
+        this.state = state;
+        this.str.setValue(str);
     }
     
     public boolean hasMine() {
@@ -60,7 +74,6 @@ public class MineCell {
 
         switch (type) {
             case NORMAL:
-                state = CellState.OPENED;
                 mgr.soner(this);
                 break;
             case MINE:

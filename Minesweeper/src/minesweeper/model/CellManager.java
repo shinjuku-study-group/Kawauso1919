@@ -27,11 +27,9 @@ public class CellManager {
     public CellManager(GameMode mode, GameMainController mainController) {
         this.mode = mode;
         this.mainController = mainController;
-        cells = new ArrayList<>();
-        createCells(mode);
-    }
 
-    private void createCells(GameMode mode) {
+        /* セルの初期化 */
+        cells = new ArrayList<>();
         for (int iy = 0; iy < mode.row; iy++) {
             for (int ix = 0; ix < mode.column; ix++) {
                 cells.add(new MineCell(ix, iy, iy * mode.column + ix, this));
@@ -58,14 +56,14 @@ public class CellManager {
         }).count();
 
         if (count == 0) {
-            org.str.setValue("　");
+            org.change(CellState.OPENED);
 
             // そのセルの周囲の地雷数が0なら、周囲のセルもオープンさせる。
             aroundCells.stream().forEach((mc) -> {
                 mc.sweep();
             });
         } else {
-            org.str.setValue(Long.toString(count));
+            org.change(CellState.OPENED, Long.toString(count));
         }
 
         //終了判定
@@ -83,7 +81,7 @@ public class CellManager {
     }
 
     /**
-     * 爆弾配置。 
+     * 爆弾配置。
      */
     private void createMine(MineCell org) {
         int mineCount = 0;
@@ -98,14 +96,17 @@ public class CellManager {
         }
     }
 
+    /**
+     * 基点セルの周囲3*3のセルを取得。
+     */
     private List<MineCell> getAroundCells(MineCell org) {
+        /* 範囲外のセルへのアクセス防止のバリア */
         final int six = org.ix - 1 < 0 ? 0 : org.ix - 1;
         final int eix = org.ix + 1 >= mode.column ? org.ix : org.ix + 1;
         final int siy = org.iy - 1 < 0 ? 0 : org.iy - 1;
         final int eiy = org.iy + 1 >= mode.row ? org.iy : org.iy + 1;
 
         final List<MineCell> arroundCells = new LinkedList<>();
-
         for (int iy = siy; iy <= eiy; iy++) {
             for (int ix = six; ix <= eix; ix++) {
                 arroundCells.add(cells.get(iy * mode.column + ix));
@@ -125,15 +126,14 @@ public class CellManager {
         cells.stream().filter((mc) -> {
             return mc.state.equals(CellState.FLAG);
         }).forEach((mc) -> {
-            mc.state = CellState.UNKNOWN;
+            mc.change(CellState.UNKNOWN);
         });
 
-        cells.stream().forEach((mineCell) -> {
-            if (mineCell.hasMine()) {
-                mineCell.state = CellState.EXPLOSION;
-                mineCell.str.setValue("爆");
+        cells.stream().forEach((mc) -> {
+            if (mc.hasMine()) {
+                mc.change(CellState.EXPLOSION);
             } else {
-                mineCell.sweep();
+                mc.sweep();
             }
         });
 
@@ -143,7 +143,7 @@ public class CellManager {
     /**
      * 周囲の地雷処理。
      *
-     * @param org
+     * @param org 基点のセル
      */
     public void aroundSweep(MineCell org) {
         getAroundCells(org).stream().forEach((mc) -> {
@@ -151,16 +151,18 @@ public class CellManager {
         });
     }
 
-    void flag(MineCell mc) {
+    /**
+     * セルにフラグを立てる/取り除く。
+     *
+     * @param mc 対象のセル
+     */
+    public void flag(MineCell mc) {
         if (CellState.UNKNOWN.equals(mc.state)) {
-            mc.state = CellState.FLAG;
-            mc.str.setValue("旗");
-            mainController.mineAdd(1);
-        } else if (CellState.FLAG.equals(mc.state)) {
-            mc.state = CellState.UNKNOWN;
-            mc.str.setValue("");
+            mc.change(CellState.FLAG);
             mainController.mineAdd(-1);
+        } else if (CellState.FLAG.equals(mc.state)) {
+            mc.change(CellState.UNKNOWN);
+            mainController.mineAdd(1);
         }
-        
     }
 }
