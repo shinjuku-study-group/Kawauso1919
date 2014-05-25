@@ -17,7 +17,6 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.effect.BoxBlur;
@@ -41,13 +40,14 @@ public class GameMainController implements Initializable {
     private GameMode mode = GameMode.EASY;
     private CellManager cellManager;
     private GameTimer timer;
+    private Stage stage;
+    public StringProperty mineCountProperty = new SimpleStringProperty("");
+    public int mineCountInt = 0;
 
     @FXML
-    private AnchorPane menuBar;
+    private Label timeLabel;
     @FXML
-    private Label time;
-    @FXML
-    private Label mineCount;
+    private Label mineCountLabel;
     @FXML
     private Pane minePane;
     @FXML
@@ -58,30 +58,25 @@ public class GameMainController implements Initializable {
     private AnchorPane gameOverFilter;
     @FXML
     private Label gameClearMessage;
-    
-    private Stage stage;
-    
-    public StringProperty mineCountProperty = new SimpleStringProperty("");
-    public int mineCountInt = 0;
 
     @FXML
     private void startButtonAction(ActionEvent event) {
         gameOverMessage.setVisible(false);
         gameOverFilter.setVisible(false);
         gameClearMessage.setVisible(false);
-        minePane.getChildren().clear();
         
-        GameUtil.ajustStateSize(stage, mode);
+        GameUtil.adjustStageSize(stage, mode);
         
         mineCountInt = 0;
-        mineAdd(mode.mineNumber);
+        mineAdd(mode.mineCount);
         
+        minePane.getChildren().clear();
         cellManager = new CellManager(mode, this);
         cellManager.cells.stream().forEach((mc) -> {
             minePane.getChildren().add(new MineCellLabel(mc));
         });
 
-        timer = new GameTimer(time);
+        timer = new GameTimer(timeLabel);
         timer.start();    
     }
 
@@ -96,8 +91,7 @@ public class GameMainController implements Initializable {
                 mode = newValue;
             }
         });
-        
-        mineCount.textProperty().bind(mineCountProperty);
+        mineCountLabel.textProperty().bind(mineCountProperty);
     }
 
     public void gameOver() {

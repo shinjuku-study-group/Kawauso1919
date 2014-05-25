@@ -12,13 +12,11 @@ import javafx.scene.control.Label;
 import minesweeper.util.Util;
 
 /**
- * ゲームのタイマー。<br>
- * これコントロールか？モデルか？分からん・・
+ * ゲームのタイマー。
  *
  * @author t-sato
  */
 public class GameTimer {
-
     private boolean isRunning = false;
     private long timeLong;
     private final StringProperty timeStr = new SimpleStringProperty("");
@@ -27,11 +25,19 @@ public class GameTimer {
         time.textProperty().bind(timeStr);
     }
 
+    /**
+     * タイマーを止める。ついでに時間を返す。
+     * 
+     * @return 終了時間。 
+     */
     public String end() {
         isRunning = false;
         return timeStr.get();
     }
 
+    /**
+     * タイマー起動。
+     */
     public void start() {
         timeLong = 0;
         timeStr.setValue("00:00:00");
@@ -40,6 +46,9 @@ public class GameTimer {
         new Thread(() -> {
             while (isRunning) {   
                 Util.sleep(1000);
+                if (!isRunning) {
+                    break;
+                }
                 
                 try {
                     Util.getFromApplicationThread(() -> {

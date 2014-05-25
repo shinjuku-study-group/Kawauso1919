@@ -18,15 +18,26 @@ import minesweeper.model.GameMode;
  * @author t-sato
  */
 public class GameUtil {
-
-    public static void ajustStateSize(Stage stage, GameMode mode) {
+    /**
+     * ステージサイズを難易度に合わせて調整する。
+     * 
+     * @param stage ステージ
+     * @param mode 難易度
+     */
+    public static void adjustStageSize(Stage stage, GameMode mode) {
         stage.setMinWidth(mode.column * GameConstant.CELL_SIZE() + GameConstant.STAGE_W_MARGIN());
         stage.setMinHeight(mode.row * GameConstant.CELL_SIZE() + GameConstant.STAGE_H_MARGIN());
         stage.setMaxWidth(mode.column * GameConstant.CELL_SIZE() + GameConstant.STAGE_W_MARGIN());
         stage.setMaxHeight(mode.row * GameConstant.CELL_SIZE() + GameConstant.STAGE_H_MARGIN());
     }
 
+    /**
+     * 音を鳴らす。超雑。めんどい。
+     * 
+     * @param url メディアのURL
+     */
     public static void playSE(URL url) {
+        //TODO サウンドUtilとかかな。
         Media audioMedia = new Media(url.toString());
         MediaPlayer audioPlayer = new MediaPlayer(audioMedia);
         audioPlayer.play();

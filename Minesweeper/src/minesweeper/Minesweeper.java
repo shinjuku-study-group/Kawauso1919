@@ -32,7 +32,7 @@ public class Minesweeper extends Application {
         
         Scene scene = new Scene(root);
         stage.setTitle(GameConstant.TITLE());
-        GameUtil.ajustStateSize(stage, GameMode.EASY);
+        GameUtil.adjustStageSize(stage, GameMode.EASY);
        
         stage.setScene(scene);
         //TODO ✖ボタン押されてた時になんかうまく死んでくれない・・・

@@ -16,7 +16,11 @@ import javafx.application.Platform;
  * @author t-sato
  */
 public class Util {
-
+    /**
+     * 割り込み例外を捨てるスリープ。
+     * 
+     * @param millis ミリ秒
+     */
     public static void sleep(long millis) {
         try {
             Thread.sleep(millis);
@@ -24,6 +28,12 @@ public class Util {
         }
     }
 
+    /**
+     * FXアプリケーションスレッドで処理させる。
+     * 
+     * @param callable コール内容
+     * @return コールの戻り値
+     */
     public static <V> V getFromApplicationThread(Callable<? extends V> callable) throws Exception {
         if (Platform.isFxApplicationThread()) {
             return callable.call();

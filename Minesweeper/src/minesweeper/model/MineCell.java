@@ -9,7 +9,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
- * セルの情報。
+ * セル。<br>
+ * なんかもう全部CellManager経由でやればいいんじゃないかな。
  *
  * @author t-sato
  */
@@ -78,20 +79,13 @@ public class MineCell {
             return;
         }
 
-        mgr.arroundSweep(this);
+        mgr.aroundSweep(this);
     }
     
     /**
      * フラグを立てる/取り除く。
      */
     public void flag() {
-        if (CellState.UNKNOWN.equals(state)) {
-            state = CellState.FLAG;
-            str.setValue("旗");          
-        } else if (CellState.FLAG.equals(state)) {
-            state = CellState.UNKNOWN;
-            str.setValue("");
-        }
         mgr.flag(this);
     }
 }

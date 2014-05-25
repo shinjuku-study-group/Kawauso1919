@@ -17,7 +17,7 @@ public class GameConstant {
         return 25;
     }
     public static String TITLE() {
-        return "MineSweeper";
+        return "Mine";
     }
     public static int STAGE_W_MARGIN() {
         return 26;

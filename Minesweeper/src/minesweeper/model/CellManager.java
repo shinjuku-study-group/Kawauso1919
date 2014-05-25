@@ -81,9 +81,12 @@ public class CellManager {
         }
     }
 
+    /**
+     * 爆弾配置。 
+     */
     private void createMine(MineCell org) {
         int mineCount = 0;
-        while (mineCount < mode.mineNumber) {
+        while (mineCount < mode.mineCount) {
             int id = (int) (Math.random() * mode.column * mode.row);
 
             if (id != org.cellId && !cells.get(id).hasMine()) {
@@ -138,16 +141,23 @@ public class CellManager {
 
     /**
      * 周囲の地雷処理。
-     * 
-     * @param org 
+     *
+     * @param org
      */
-    public void arroundSweep(MineCell org) {
+    public void aroundSweep(MineCell org) {
         getAroundCells(org).stream().forEach((mc) -> {
             mc.sweep();
         });
     }
 
     void flag(MineCell mc) {
+        if (CellState.UNKNOWN.equals(mc.state)) {
+            mc.state = CellState.FLAG;
+            mc.str.setValue("旗");
+        } else if (CellState.FLAG.equals(mc.state)) {
+            mc.state = CellState.UNKNOWN;
+            mc.str.setValue("");
+        }
         mainController.mineAdd(mc.state.equals(CellState.FLAG) ? -1 : 0);
     }
 }

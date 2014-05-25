@@ -15,17 +15,18 @@ public enum GameMode {
     EASY(10, 6, 5),
     NORMAL(15, 10, 15),
     HARD(20, 16, 40),
-    MANIA(30, 20, 120);
+    MANIA(30, 20, 120),
+    CRAZY(35, 22, 250);
     //TODO CUSTOMとか？
     
     public final int column;
     public final int row;
-    public final int mineNumber;
+    public final int mineCount;
     
-    private GameMode(final int column, final int row, final int mineNumber) {
+    private GameMode(final int column, final int row, final int mineCount) {
         this.column = column;
         this.row = row;
-        this.mineNumber = mineNumber;
+        this.mineCount = mineCount;
     }
     
 }
