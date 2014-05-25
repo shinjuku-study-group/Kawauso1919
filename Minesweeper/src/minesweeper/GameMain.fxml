@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" fx:id="menuBar" prefHeight="286.0" prefWidth="425.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="minesweeper.control.GameMainController">
+    <children>
+      <MenuBar layoutX="1.0" layoutY="-2.0" prefHeight="31.0" prefWidth="425.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="システム" />
+          <Menu mnemonicParsing="false" text="記録" />
+            <Menu mnemonicParsing="false" text="マニュアル" />
+        </menus>
+      </MenuBar>
+      <AnchorPane fx:id="applicationPane" layoutX="14.0" layoutY="80.0" prefHeight="203.0" prefWidth="419.0" style="-fx-background-color: gray; -fx-border-color: black;" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="80.0">
+         <children>
+            <Label fx:id="time" alignment="CENTER" layoutX="311.0" layoutY="5.0" prefHeight="28.0" prefWidth="100.0" style="-fx-background-color: white; -fx-border-color: black;" text="00:00:00" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="3.0">
+               <font>
+                  <Font name="Comic Sans MS" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="mineCount" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="160.0" layoutY="4.0" prefHeight="28.0" prefWidth="100.0" style="-fx-background-color: yellow; -fx-border-color: black;" text="0" textAlignment="CENTER" AnchorPane.leftAnchor="3.0" AnchorPane.topAnchor="3.0">
+               <font>
+                  <Font name="Comic Sans MS Bold Italic" size="14.0" />
+               </font>
+            </Label>
+            <Pane fx:id="minePane" layoutX="14.0" layoutY="40.0" prefHeight="201.0" prefWidth="395.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-style: solid; -fx-border-width: 3;" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="36.0">
+               <padding>
+                  <Insets top="3.0" />
+               </padding></Pane>
+            <AnchorPane fx:id="gameOverFilter" blendMode="SRC_ATOP" opacity="0.44" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: gray;" visible="false" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="36.0" />
+            <Label fx:id="gameOverMessage" alignment="CENTER" prefHeight="195.0" prefWidth="402.0" text="Game Over" textAlignment="CENTER" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <font>
+                  <Font name="Comic Sans MS Bold Italic" size="40.0" />
+               </font>
+               <effect>
+                  <Lighting diffuseConstant="0.0" specularConstant="1.42" specularExponent="3.9" surfaceScale="7.07">
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant azimuth="53.78" color="RED" />
+                     </light>
+                  </Lighting>
+               </effect>
+               <cursor>
+                  <Cursor fx:constant="W_RESIZE" />
+               </cursor>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </Label>
+            <Label fx:id="gameClearMessage" alignment="CENTER" layoutX="11.0" layoutY="11.0" prefHeight="195.0" prefWidth="402.0" text="Game Clear!!" textAlignment="CENTER" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <cursor>
+                  <Cursor fx:constant="W_RESIZE" />
+               </cursor>
+               <effect>
+                  <GaussianBlur radius="0.0">
+                     <input>
+                        <Lighting bumpInput="$null">
+                           <light>
+                              <Light.Distant />
+                           </light>
+                        </Lighting>
+                     </input>
+                  </GaussianBlur>
+               </effect>
+               <font>
+                  <Font name="Comic Sans MS Bold Italic" size="40.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </Label>
+         </children>
+      </AnchorPane>
+      <ToolBar layoutY="32.0" prefHeight="28.0" prefWidth="425.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="32.0">
+         <items>
+            <Button fx:id="startButton" mnemonicParsing="false" onAction="#startButtonAction" prefHeight="31.0" prefWidth="63.0" style="-fx-border-color: black;" text="スタート">
+               <font>
+                  <Font name="Comic Sans MS" size="12.0" />
+               </font>
+            </Button>
+            <ChoiceBox fx:id="modeChoice" maxHeight="31.0" prefHeight="31.0" prefWidth="96.0" />
+         </items>
+      </ToolBar>
+    </children>
+</AnchorPane>
